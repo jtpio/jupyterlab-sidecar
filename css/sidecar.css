@@ -1,3 +1,6 @@
+@import url('~phosphor-float-area/style/index.css');
+
+
 .jupyterlab-sidecar {
   background: var(--jp-layout-color0);
   display: flex;

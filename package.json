@@ -38,9 +38,10 @@
     "watch:lib": "tsc"
   },
   "dependencies": {
-    "@jupyter-widgets/base": "^2.0.1",
+    "@jupyter-widgets/base": "^1.0.0 || ^2.0.1",
     "@jupyter-widgets/jupyterlab-manager": "^1.0.0",
-    "@jupyterlab/application": "^1.0.0"
+    "@jupyterlab/application": "^1.0.0",
+    "phosphor-float-area": "^0.1.2"
   },
   "devDependencies": {
     "@types/expect.js": "^0.3.29",

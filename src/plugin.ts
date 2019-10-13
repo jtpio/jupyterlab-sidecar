@@ -17,6 +17,8 @@ import {
   output
 } from '@jupyter-widgets/jupyterlab-manager';
 
+import { FloatArea } from 'phosphor-float-area';
+
 import {
   SidecarModel
 } from './widget';
@@ -26,6 +28,7 @@ import {
 } from './version';
 
 import '../css/sidecar.css';
+import { Widget } from '@phosphor/widgets';
 
 const EXTENSION_ID = '@jupyter-widgets/jupyterlab-sidecar';
 
@@ -43,6 +46,12 @@ export default sidecarPlugin;
  * Activate the widget extension.
  */
 function activateWidgetExtension(app: JupyterLab, registry: IJupyterWidgetRegistry): void {
+    let floatArea = new FloatArea();
+    floatArea.id = UUID.uuid4();
+    floatArea.title.closable = true;
+    floatArea.backdropNode = app.shell.node;
+    Widget.attach(floatArea, app.shell.node);
+
     let SidecarView = class extends output.OutputView {
       model: SidecarModel;
 
@@ -51,7 +60,6 @@ function activateWidgetExtension(app: JupyterLab, registry: IJupyterWidgetRegist
           super.render();
           let w = this._outputView;
           w.addClass('jupyterlab-sidecar');
-          w.addClass('jp-LinkedOutputView');
           w.title.label = this.model.get('title');
           w.title.closable = true;
           app.shell['_rightHandler'].sideBar.tabCloseRequested.connect((sender : any, tab : any) => {
@@ -65,7 +73,9 @@ function activateWidgetExtension(app: JupyterLab, registry: IJupyterWidgetRegist
               v._outputView.activate();
             });
           } else {
-            app.shell.add(w, 'right');
+            floatArea.addWidget(w, { placement: 'float' });
+
+            // app.shell.add(w, 'right');
             app.shell.expandRight();
           }
         }
